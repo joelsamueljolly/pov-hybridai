@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rent the Models. Own the Meaning. | Hybrid AI for Utility Customer Processes | Joel Jolly</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Geist-style foundations: white canvas, neutral gray scale, 1px borders, no shadows */
+:root{
+  --bg:#ffffff; --hover:#fafafa; --fill:#f5f5f5; --line:#eaeaea; --line-strong:#c9c9c9;
+  --text:#171717; --text2:#4d4d4d; --muted:#6b6b6b;
+  --rent:#0070f3; --own:#067a6e; --bad:#e5484d;
+  --sans:"Geist",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --r:6px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);font-size:14px;line-height:1.6;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+.label{font-size:12px;letter-spacing:.04em;text-transform:uppercase;font-weight:500;color:var(--muted)}
+.hlp{font-size:13px;color:var(--muted);line-height:1.5}
+.sec{color:var(--text2)}
+h1{font-size:clamp(32px,5vw,48px);line-height:1.1;font-weight:600;letter-spacing:-.035em;max-width:18ch}
+h2{font-size:24px;font-weight:600;line-height:1.3;letter-spacing:-.02em;margin-bottom:8px;max-width:34ch}
+h3{font-size:14px;font-weight:600;line-height:1.4}
+h4{font-size:20px;font-weight:600;letter-spacing:-.015em;line-height:1.35}
+.measure{max-width:64ch}
+.mono{font-family:var(--mono)}
+
+/* top bar and tabs */
+.top{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.top-in{max-width:1120px;margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:24px;min-height:52px}
+.brand{font-weight:600;white-space:nowrap;letter-spacing:-.01em}
+.brand span{font-weight:400;color:var(--muted);margin-left:10px}
+.tabs{display:flex;overflow-x:auto;margin-left:auto}
+.tab{border:0;background:none;font:inherit;font-size:14px;padding:16px 14px 14px;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap}
+.tab:hover{color:var(--text)}
+.tab[aria-selected="true"]{color:var(--text);font-weight:500;border-bottom-color:var(--text)}
+:focus-visible{outline:2px solid var(--rent);outline-offset:2px}
+@media(max-width:860px){.brand span{display:none}.top-in{gap:8px;padding:0 8px 0 16px}}
+
+main{max-width:1120px;margin:0 auto;padding:56px 24px 0}
+section[hidden]{display:none}
+.eyebrow{margin-bottom:20px}
+.lede{font-size:18px;line-height:1.6;color:var(--text2);margin-top:20px;max-width:56ch}
+.grid{display:grid;gap:16px}
+.g3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:860px){.g3{grid-template-columns:1fr}}
+.card{border:1px solid var(--line);border-radius:var(--r);background:var(--bg);padding:20px}
+.card p{margin-top:6px;color:var(--text2)}
+.pull{border-left:2px solid var(--text);padding:4px 0 4px 20px;font-size:20px;font-weight:500;letter-spacing:-.015em;line-height:1.45;margin:36px 0;max-width:36ch}
+.tag{display:inline-block;font-family:var(--mono);font-size:12px;font-weight:500;padding:1px 8px;border-radius:999px;border:1px solid currentColor;background:none}
+.tag.rent{color:var(--rent)}.tag.own{color:var(--own)}
+.rule-pair{display:grid;grid-template-columns:1fr 1fr;margin-top:32px;border:1px solid var(--line);border-radius:var(--r)}
+.rule-pair>div{padding:24px}.rule-pair>div+div{border-left:1px solid var(--line)}
+.rule-pair .big{font-size:24px;font-weight:600;letter-spacing:-.02em;line-height:1.25;margin:10px 0 6px}
+@media(max-width:860px){.rule-pair{grid-template-columns:1fr}.rule-pair>div+div{border-left:0;border-top:1px solid var(--line)}}
+.divider{border:0;border-top:1px solid var(--line);margin:56px 0 48px}
+
+/* stack */
+.stack{display:grid;grid-template-columns:1.1fr 1fr;gap:24px;margin-top:28px;align-items:start}
+@media(max-width:900px){.stack{grid-template-columns:1fr}}
+.layers{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.layer{display:flex;gap:14px;align-items:center;padding:14px 16px;background:var(--bg);border:0;border-bottom:1px solid var(--line);font:inherit;text-align:left;cursor:pointer;width:100%}
+.layer:last-child{border-bottom:0}
+.layer:hover{background:var(--hover)}
+.layer[aria-pressed="true"]{background:var(--fill)}
+.layer .n{font-family:var(--mono);font-size:12px;color:var(--muted);flex:none}
+.layer b{display:block;font-weight:500}
+.layer small{color:var(--muted);font-size:13px}
+.layer .arrow{margin-left:auto;color:var(--muted);font-size:12px;flex:none}
+.detail{border:1px solid var(--line);border-radius:var(--r);padding:24px;min-height:300px;position:sticky;top:76px}
+.detail ul{margin:12px 0 0 18px;color:var(--text2)}
+.detail li{margin-top:4px}
+.own-meter{margin-top:20px}
+.bar{height:4px;background:var(--line);margin-top:8px;border-radius:2px}
+.bar i{display:block;height:100%;background:var(--text);border-radius:2px;transition:width .25s}
+
+/* chips */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}
+.chip{border:1px solid var(--line);border-radius:999px;background:var(--bg);font:inherit;font-size:13px;padding:6px 14px;cursor:pointer;color:var(--text2)}
+.chip:hover{border-color:var(--line-strong);color:var(--text)}
+.chip[aria-pressed="true"]{background:var(--text);color:#fff;border-color:var(--text)}
+
+/* customer core process */
+.proc{margin-top:20px;border:1px solid var(--line);border-radius:var(--r)}
+.proc-head{padding:20px 24px;border-bottom:1px solid var(--line)}
+.proc-row{display:grid;grid-template-columns:200px 1fr;gap:16px;padding:14px 24px;border-bottom:1px solid var(--line)}
+.proc-row:last-child{border-bottom:0}
+.proc-row .who{font-weight:500}
+.proc-row .who small{display:block;font-weight:400;color:var(--muted);font-size:13px}
+.proc-row p{color:var(--text2)}
+@media(max-width:700px){.proc-row{grid-template-columns:1fr;gap:4px}}
+.flag{margin-top:12px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+
+/* lifecycle */
+.life{display:grid;grid-template-columns:repeat(6,1fr);margin-top:24px;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+@media(max-width:900px){.life{grid-template-columns:repeat(3,1fr)}}
+.step{border:0;border-right:1px solid var(--line);border-bottom:2px solid transparent;background:var(--bg);font:inherit;padding:14px;cursor:pointer;text-align:left}
+.step:last-child{border-right:0}
+.step:hover{background:var(--hover)}
+.step[aria-pressed="true"]{background:var(--fill);border-bottom-color:var(--text)}
+.step .n{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.step b{display:block;margin-top:2px;font-weight:500}
+.lifebody{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+@media(max-width:860px){.lifebody{grid-template-columns:1fr}}
+.lifebody .card h3{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:500}
+.lifebody .card p{color:var(--text);margin-top:8px}
+.pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.pill{font-size:12px;border:1px solid var(--line);padding:1px 10px;border-radius:999px;color:var(--text2)}
+
+/* threshold lab */
+.lab{display:grid;grid-template-columns:1.4fr 1fr;gap:24px;margin-top:20px}
+@media(max-width:900px){.lab{grid-template-columns:1fr}}
+.plot{border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.plot svg{width:100%;height:auto;display:block}
+.slider{margin-top:16px}
+.slider input{width:100%;accent-color:var(--text)}
+.slider .row{display:flex;justify-content:space-between;align-items:baseline}
+.slider .v{font-family:var(--mono);font-size:24px;font-weight:500}
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.metric{border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.metric .v{font-family:var(--mono);font-size:22px;font-weight:500;line-height:1.3;margin-top:4px}
+.metric.bad .v{color:var(--bad)}
+.verdict{margin-top:12px;padding:14px 16px;border:1px solid var(--line);border-radius:var(--r)}
+.btn{border:1px solid var(--line-strong);border-radius:var(--r);background:var(--bg);color:var(--text);font:inherit;font-size:13px;padding:7px 14px;cursor:pointer;margin-top:12px}
+.btn:hover{background:var(--hover);border-color:var(--text)}
+
+/* sovereignty */
+.sov{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px}
+@media(max-width:860px){.sov{grid-template-columns:1fr}}
+.col{border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.item{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line)}
+.col .item:first-of-type{border-top:0}
+label.item{cursor:pointer}
+.item input{margin-top:5px;accent-color:var(--text)}
+.swap{margin-top:16px;padding:20px;border:1px solid var(--line);border-radius:var(--r)}
+.swap-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.notsys{margin-top:40px}
+.notsys ul{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+@media(max-width:860px){.notsys ul{grid-template-columns:repeat(2,1fr)}}
+.notsys li{border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;font-size:13px;color:var(--text2);text-decoration:line-through;text-decoration-color:var(--bad)}
+
+/* footer */
+.pagefoot{margin:80px -24px 0;padding:28px 32px 44px;border-top:1px solid var(--line)}
+.pagefoot .author{display:flex;align-items:center;gap:16px;padding-bottom:20px;margin-bottom:20px;border-bottom:1px solid var(--line)}
+.author-img{width:56px;height:56px;border-radius:50%;object-fit:cover;flex:none;border:1px solid var(--line);background:var(--fill)}
+.author-meta{display:flex;flex-direction:column;gap:1px}
+.author-meta b{font-size:15px;font-weight:600}
+.author-meta .role{color:var(--text2)}
+.author-meta .ctx{font-size:13px;color:var(--muted)}
+.pagefoot p{max-width:680px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <div class="brand">Rent the Models. Own the Meaning.<span>Hybrid AI for customer processes</span></div>
+    <nav class="tabs" role="tablist" aria-label="Point of view sections" id="tabs"></nav>
+  </div>
+</header>
+
+<main>
+
+<!-- 1 THESIS -->
+<section id="t0" role="tabpanel">
+  <div class="eyebrow label">Point of view · Energy utilities</div>
+  <h1>Rent the models. Own the meaning.</h1>
+  <p class="lede">Why energy utilities need a hybrid AI strategy, not an LLM strategy, for their customer core processes. Billing audit and exception management is the use case we worked through in detail.</p>
+
+  <div class="pull">LLMs love to yap. A customer process doesn't need a confident essay. It needs a decision.</div>
+
+  <p class="sec measure">Take a billing exception. Is this bill at risk? What kind of exception is it? Who owns it? What evidence supports the adjustment? The same questions come up in onboarding, payments, collections and disputes. &ldquo;Not everything needs an LLM&rdquo; is only half the insight. The other half is that not everything should be owned by the model vendor either.</p>
+
+  <div class="rule-pair">
+    <div>
+      <span class="tag rent">Rent</span>
+      <div class="big">General-purpose intelligence</div>
+      <p class="sec">Foundation models, specialised anomaly and forecasting models, decision-model services, document intelligence, vector search.</p>
+    </div>
+    <div>
+      <span class="tag own">Own</span>
+      <div class="big">Domain meaning</div>
+      <p class="sec">Tariff logic, contract terms, meter-data semantics, case taxonomy, thresholds, audit trail and approval rights.</p>
+    </div>
+  </div>
+
+  <div class="grid g3" style="margin-top:24px">
+    <div class="card"><h3>Selective sovereignty</h3><p>Change vendors without changing what &ldquo;valid bill&rdquo;, &ldquo;high-risk case&rdquo; or &ldquo;approved adjustment&rdquo; means.</p></div>
+    <div class="card"><h3>Customer processes are not a chat problem</h3><p>High volume, high consequence and regulated. They need typed, auditable decisions, not prose.</p></div>
+    <div class="card"><h3>LLMs are collaborators, not sovereigns</h3><p>They draft, summarise, retrieve and propose. Owned rules and accountable people decide.</p></div>
+  </div>
+</section>
+
+<!-- 2 STACK -->
+<section id="t1" role="tabpanel" hidden>
+  <div class="eyebrow label">The hybrid stack</div>
+  <h2>Five layers, one division of labour, and a person who is accountable</h2>
+  <p class="sec measure">Pick a layer. Order matters: rules and physics set the non-negotiables, and the LLM sits late as an interface to language and ambiguity.</p>
+  <div class="stack">
+    <div class="layers" id="layers"></div>
+    <div class="detail" id="layerDetail" aria-live="polite"></div>
+  </div>
+  <p class="sec measure" style="margin-top:28px">Physics-informed approaches combine data with first principles, which embeds physical constraints and improves interpretability. Hybrid energy-system research also treats the LLM as an interface, not the final decision-maker.</p>
+</section>
+
+<!-- 3 CUSTOMER CORE -->
+<section id="t2" role="tabpanel" hidden>
+  <div class="eyebrow label">Customer core processes</div>
+  <h2>The same pattern runs across the customer core</h2>
+  <p class="sec measure">Every core process mixes exact rules, pattern detection, narrow judgments, language work and human accountability. Pick a process to see who does what.</p>
+  <div class="chips" id="procChips" role="group" aria-label="Customer process"></div>
+  <div class="proc" id="procBody" aria-live="polite"></div>
+</section>
+
+<!-- 4 USE CASE -->
+<section id="t3" role="tabpanel" hidden>
+  <div class="eyebrow label">Worked use case · Billing audit and exceptions</div>
+  <h2>Billing exceptions: the experiment we detailed</h2>
+  <p class="sec measure">Billing is where volume, regulation and customer trust meet, so it makes a good test. LLMs should not own the exception lifecycle. They improve its language, context and reasoning interfaces.</p>
+
+  <div class="life" id="life"></div>
+  <div class="lifebody" id="lifeBody" aria-live="polite"></div>
+
+  <hr class="divider">
+
+  <h2>Thresholds are policy, not configuration</h2>
+  <p class="sec measure">A probability is not a decision. It is an input to a decision policy. Pick an exception class and move the threshold. The cheapest setting differs by class, so one global &ldquo;0.8&rdquo; is wrong for most of them.</p>
+  <div class="chips" id="chips" role="group" aria-label="Exception class"></div>
+  <div class="lab">
+    <div class="plot">
+      <svg id="plot" viewBox="0 0 560 260" role="img" aria-label="Score distribution of 200 simulated cases"></svg>
+      <div class="slider">
+        <div class="row"><label for="thr" class="label">Review threshold</label><span class="v" id="thrV">0.50</span></div>
+        <input type="range" id="thr" min="0.05" max="0.95" step="0.01" value="0.5">
+        <div class="hlp">Cases scoring at or above the threshold go to review. Simulated data for illustration, not a benchmark.</div>
+        <button class="btn" id="best" type="button">Snap to cheapest threshold</button>
+      </div>
+    </div>
+    <div>
+      <div class="metrics" id="metrics"></div>
+      <div class="verdict" id="verdict" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:24px">
+    <h3>Where narrow decision models fit</h3>
+    <p>Use one when the question is narrow, the input can be flattened and the cost of a wrong answer is understood: an exception gate, a duplicate-invoice check, a zero-read data-quality check, queue triage, an evidence check, a model router, and a <b>judge of LLM output</b> (&ldquo;does this customer explanation contain an unsupported billing claim?&rdquo;). As I argued in my earlier articles and posts on decision models as judges, break the job into plain yes-or-no checks. A vague &ldquo;review this response&rdquo; or a complex ranking task performs close to random. Recalibrate thresholds per task and per model version, and run in shadow mode while you do.</p>
+  </div>
+</section>
+
+<!-- 5 SOVEREIGNTY -->
+<section id="t4" role="tabpanel" hidden>
+  <div class="eyebrow label">Selective sovereignty</div>
+  <h2>What to rent, what to own</h2>
+  <p class="sec measure">Tick what your utility owns today. The gaps show where a vendor change would quietly change the meaning of a valid bill.</p>
+  <div class="sov">
+    <div class="col"><span class="tag rent">Rent</span><div id="rentList" style="margin-top:8px"></div></div>
+    <div class="col"><span class="tag own">Own</span><div id="ownList" style="margin-top:8px"></div>
+      <div class="own-meter"><div class="label" id="ownScore">0 of 7 owned</div><div class="bar"><i id="ownBar" style="width:0"></i></div></div>
+    </div>
+  </div>
+
+  <div class="swap">
+    <h3>A model-agnostic gateway is a sovereignty mechanism</h3>
+    <p class="sec" style="margin-top:4px">Change what sits behind the gateway. What survives?</p>
+    <div class="swap-row" id="swapRow"></div>
+    <div class="verdict" id="swapOut" aria-live="polite">Pick a change to see what happens.</div>
+  </div>
+
+  <div class="notsys">
+    <h3>Never make the LLM the system of record for</h3>
+    <ul>
+      <li>Tariff interpretation</li><li>Final invoice calculation</li><li>Regulatory compliance</li><li>Credit issuance</li>
+      <li>Fraud determination</li><li>Customer refunds</li><li>Audit evidence</li><li>Case closure</li>
+    </ul>
+  </div>
+  <div class="pull">Hybrid AI is not &ldquo;LLM plus tools&rdquo;. It is an architecture of accountability, built around meaning rather than models.</div>
+</section>
+
+<footer class="pagefoot">
+  <div class="author">
+    <img class="author-img" src="img/Passport.JPG" alt="Joel Jolly" width="56" height="56" loading="lazy">
+    <span class="author-meta">
+      <b>Joel Jolly</b>
+      <span class="role">Author of this point of view</span>
+      <span class="ctx">Energy Utilities · Hybrid AI for Customer Core Processes · November 2026</span>
+    </span>
+  </div>
+  <p class="hlp">Rent the Models. Own the Meaning. A personal point of view shared for discussion. Billing exceptions are one worked use case, and the threshold lab uses simulated data for illustration. The thinking on decision models, narrow yes-or-no checks and using them as judges builds on my earlier articles and posts. It is directional, not a benchmark.</p>
+</footer>
+</main>
+
+<script>
+(function(){
+"use strict";
+var $=function(id){return document.getElementById(id)};
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+
+/* tabs */
+var TABS=["Thesis","Hybrid stack","Customer core","Use case","Sovereignty"];
+var cur=0;
+$("tabs").innerHTML=TABS.map(function(t,i){return '<button class="tab" role="tab" id="tab'+i+'" aria-controls="t'+i+'" aria-selected="'+(i===0)+'" tabindex="'+(i===0?0:-1)+'" data-i="'+i+'">'+t+'</button>'}).join("");
+function go(i){
+  if(i<0||i>=TABS.length)return; cur=i;
+  TABS.forEach(function(_,k){
+    $("t"+k).hidden=k!==i;
+    var b=$("tab"+k); b.setAttribute("aria-selected",String(k===i)); b.tabIndex=k===i?0:-1;
+  });
+  try{history.replaceState(null,"","#"+i)}catch(e){}
+  window.scrollTo(0,0);
+}
+$("tabs").addEventListener("click",function(e){var b=e.target.closest(".tab");if(b)go(+b.dataset.i)});
+$("tabs").addEventListener("keydown",function(e){
+  if(e.key==="ArrowRight"){go((cur+1)%TABS.length);$("tab"+cur).focus()}
+  if(e.key==="ArrowLeft"){go((cur+TABS.length-1)%TABS.length);$("tab"+cur).focus()}
+});
+
+/* stack */
+var LAYERS=[
+ {n:"01",name:"Deterministic rules",who:"Exact, regulated, contractual logic",own:100,ex:["Tariff application","Tax rules","Contract entitlements","Payment terms and regulatory limits"],note:"The regulated core. Non-negotiable and fully explainable. Never delegated to a model."},
+ {n:"02",name:"Physics and engineering models",who:"Consumption and network behaviour",own:80,ex:["Load profiles","Weather-normalised usage","Meter behaviour","Network constraints"],note:"Grounds the system in reality. An impossible reading is impossible whatever a model says."},
+ {n:"03",name:"Specialised ML",who:"Recurring statistical patterns",own:50,ex:["Anomaly detection","Consumption forecasting","Fraud signals","Data-quality scoring"],note:"Rent or build it, but own the labelled outcomes that calibrate it."},
+ {n:"04",name:"Decision models",who:"Fast, bounded judgments",own:40,ex:["Does this need review?","Which queue or treatment path?","Is this explanation plausible?"],note:"Typed answers with probabilities. They gate expensive calls, route work and judge LLM output. Own the thresholds."},
+ {n:"05",name:"LLMs",who:"Language, synthesis, ambiguity",own:10,ex:["Customer communication","Case summaries","Policy interpretation","Analyst assistance"],note:"Excellent collaborators, poor sovereigns. The most replaceable layer, so keep it behind a gateway."},
+ {n:"06",name:"People",who:"Accountability for consequential decisions",own:100,ex:["Approving credits and adjustments","Fraud determination","Case closure","Escalation paths"],note:"Decision rights and the audit trail stay with named, accountable roles."}
+];
+var sel=0;
+function renderLayers(){
+  $("layers").innerHTML=LAYERS.map(function(l,i){return '<button class="layer" type="button" data-i="'+i+'" aria-pressed="'+(i===sel)+'"><span class="n">'+l.n+'</span><span><b>'+esc(l.name)+'</b><small>'+esc(l.who)+'</small></span><span class="arrow">&darr;</span></button>'}).join("");
+  var l=LAYERS[sel];
+  $("layerDetail").innerHTML='<div class="label">'+l.n+' · '+esc(l.name)+'</div><h4 style="margin-top:8px">'+esc(l.who)+'</h4><p class="sec" style="margin-top:8px">'+esc(l.note)+'</p><ul>'+l.ex.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul><div class="own-meter"><div class="label">How much should you own outright?</div><div class="bar"><i style="width:'+l.own+'%"></i></div><div class="hlp" style="margin-top:6px">'+l.own+'%. '+(l.own>=70?'Own the logic.':l.own>=35?'Rent the engine, own the calibration.':'Rent freely, own the gateway.')+'</div></div>';
+}
+$("layers").addEventListener("click",function(e){var b=e.target.closest(".layer");if(b){sel=+b.dataset.i;renderLayers();}});
+renderLayers();
+
+/* customer core processes */
+var PROCS=[
+ {name:"Onboarding and move-in",q:"Is this customer set up correctly, on the right plan, from day one?",
+  rules:"Eligibility, tariff assignment, deposit and identity rules.",
+  models:"Document intelligence to read forms and proofs of address.",
+  dm:"Is this application complete and consistent? Standard path or manual review?",
+  llm:"Explain plan options in plain language and draft welcome messages.",
+  human:"Credit-risk exceptions and identity concerns."},
+ {name:"Metering and reads",q:"Can we trust the data that every bill depends on?",
+  rules:"Validation limits and estimation rules.",
+  models:"Load profiles, weather-normalised usage, anomaly and meter-behaviour models.",
+  dm:"Does this meter interval need review before billing?",
+  llm:"Summarise field notes and work orders for the analyst.",
+  human:"Meter replacement and tamper decisions."},
+ {name:"Billing and invoicing",q:"Is this bill right, and if not, why not?",use:true,
+  rules:"Tariff and tax application, contract entitlements.",
+  models:"Anomaly, consumption forecast and fraud signals.",
+  dm:"Exception gate, duplicate check, queue triage, evidence check.",
+  llm:"Case summaries and customer explanations, checked by a judge.",
+  human:"Approving adjustments and closing exceptions."},
+ {name:"Payments and collections",q:"Which treatment fits this customer, and is it fair?",
+  rules:"Payment terms, regulatory protections, disconnection rules.",
+  models:"Propensity-to-pay and arrears forecasting.",
+  dm:"Which treatment path? Does this look like a hardship signal?",
+  llm:"Draft considerate reminders and payment-plan explanations.",
+  human:"Disconnection and exceptions to payment plans."},
+ {name:"Service requests",q:"Who should handle this, and how fast?",
+  rules:"Service levels and entitlements.",
+  models:"Demand forecasting and field-capacity models.",
+  dm:"Classify the request and route it to the right queue.",
+  llm:"Summarise the customer's history before the agent picks up.",
+  human:"Escalations and goodwill decisions."},
+ {name:"Disputes and complaints",q:"Does the evidence support the claim, and what do we owe?",
+  rules:"Refund policy and regulatory response times.",
+  models:"Pattern detection across similar complaints.",
+  dm:"Does the evidence support the claim? Does the draft reply contain an unsupported statement?",
+  llm:"Draft the response and assemble the evidence pack.",
+  human:"Refunds, credits and regulator responses."}
+];
+var pi=0;
+function renderProcs(){
+  $("procChips").innerHTML=PROCS.map(function(p,i){return '<button class="chip" type="button" data-i="'+i+'" aria-pressed="'+(i===pi)+'">'+esc(p.name)+(p.use?' · worked use case':'')+'</button>'}).join("");
+  var p=PROCS[pi];
+  function row(a,b,c){return '<div class="proc-row"><div class="who">'+a+'<small>'+b+'</small></div><p>'+esc(c)+'</p></div>'}
+  $("procBody").innerHTML='<div class="proc-head"><h4>'+esc(p.name)+'</h4><p class="sec" style="margin-top:4px">'+esc(p.q)+'</p>'+(p.use?'<div class="flag"><span class="tag own">Worked use case</span><button class="btn" type="button" id="toUse" style="margin-top:0">See the detail</button></div>':'')+'</div>'+
+    row('Rules','Own the logic',p.rules)+
+    row('Physics and ML','Rent or build',p.models)+
+    row('Decision model','Gate, classify, judge',p.dm)+
+    row('LLM','Language and synthesis',p.llm)+
+    row('People','Stay accountable',p.human);
+  var u=$("toUse");if(u)u.addEventListener("click",function(){go(3)});
+}
+$("procChips").addEventListener("click",function(e){var b=e.target.closest(".chip");if(b){pi=+b.dataset.i;renderProcs()}});
+renderProcs();
+
+/* billing exception lifecycle */
+var LIFE=[
+ {n:"1",name:"Prevent",what:"Catch bad inputs before billing: missing reads, impossible consumption, meter-clock issues, duplicate invoices, tariff mismatches.",tool:"Rules and physics constraints, with a decision-model gate for borderline intervals.",who:["Rules","Physics","Decision model"],acct:"The owned rule or validation limit, with a named owner."},
+ {n:"2",name:"Detect",what:"Find anomalies rules cannot express: unusual load shapes, weather-adjusted deviations, cross-account inconsistencies.",tool:"Specialised ML for anomaly, forecast and fraud signals.",who:["Specialised ML"],acct:"The model owner, working to thresholds the utility sets."},
+ {n:"3",name:"Classify",what:"Assign the exception type, priority, owner and likely root cause.",tool:"A decision model triages to meter, tariff, contract, estimation or fraud queues. The owned taxonomy defines the classes.",who:["Decision model","Owned taxonomy"],acct:"The taxonomy owner. Queue owners accept or reject the routing."},
+ {n:"4",name:"Explain",what:"Assemble the evidence: meter data, contract, tariff, prior bills, work orders, market data.",tool:"The LLM summarises and drafts. A decision-model judge checks each claim against the evidence.",who:["LLM","Decision-model judge"],acct:"The analyst who signs off the explanation."},
+ {n:"5",name:"Resolve",what:"Route to the right person or automated workflow, with a clear audit trail.",tool:"A router picks the rules engine, anomaly model, LLM summary or analyst. People approve credits and closures.",who:["Router","Human approval"],acct:"A named role owns the outcome and the audit trail."},
+ {n:"6",name:"Learn",what:"Feed confirmed outcomes back into thresholds, rules, models and the taxonomy.",tool:"Labelled outcomes become the calibration and evaluation sets you own. New models run in shadow mode first.",who:["Owned labels","Shadow mode"],acct:"The model-risk owner approves threshold and rule changes."}
+];
+var ls=0;
+function renderLife(){
+  $("life").innerHTML=LIFE.map(function(s,i){return '<button class="step" type="button" data-i="'+i+'" aria-pressed="'+(i===ls)+'"><span class="n">0'+s.n+'</span><b>'+s.name+'</b></button>'}).join("");
+  var s=LIFE[ls];
+  $("lifeBody").innerHTML='<div class="card"><h3>What happens</h3><p>'+esc(s.what)+'</p></div><div class="card"><h3>What does the work</h3><p>'+esc(s.tool)+'</p><div class="pills">'+s.who.map(function(w){return '<span class="pill">'+esc(w)+'</span>'}).join("")+'</div></div><div class="card"><h3>Who is accountable</h3><p>'+esc(s.acct)+'</p></div>';
+}
+$("life").addEventListener("click",function(e){var b=e.target.closest(".step");if(b){ls=+b.dataset.i;renderLife();}});
+renderLife();
+
+/* threshold lab (simulated, seeded so it stays stable) */
+function rng(seed){return function(){seed=(seed*1664525+1013904223)%4294967296;return seed/4294967296}}
+function clamp(x){return Math.min(.99,Math.max(.01,x))}
+function avg(r,n){var x=0;for(var i=0;i<n;i++)x+=r();return x/n}
+var CLASSES=[
+ {name:"Duplicate invoice",fp:60,fn:20,pos:.22,seed:11,note:"A false positive puts an unnecessary payment hold on a valid invoice, so the best threshold sits higher."},
+ {name:"Routine meter-read anomaly",fp:40,fn:15,pos:.30,seed:23,note:"Analyst capacity is the scarce resource, so avoid flooding the queue."},
+ {name:"Fraud or tampering",fp:30,fn:400,pos:.12,seed:37,note:"Missing real tampering is costly. Investigate rather than auto-close."},
+ {name:"Customer credit adjustment",fp:25,fn:250,pos:.15,seed:53,note:"Wrong credits harm customers and revenue. Require human approval."}
+];
+function cost(c,t){
+  var tp=0,fp=0,fn=0,tn=0;
+  c.cases.forEach(function(k){var f=k.s>=t;if(k.p&&f)tp++;else if(!k.p&&f)fp++;else if(k.p&&!f)fn++;else tn++});
+  return {tp:tp,fp:fp,fn:fn,tn:tn,cost:fp*c.fp+fn*c.fn};
+}
+CLASSES.forEach(function(c){
+  var r=rng(c.seed);c.cases=[];
+  for(var i=0;i<200;i++){
+    var p=r()<c.pos;
+    c.cases.push({p:p,s:clamp(p?0.35+avg(r,3)*0.6:avg(r,3)*0.75)});
+  }
+  var best=Infinity,bt=.5;
+  for(var t=5;t<=95;t++){var q=cost(c,t/100).cost;if(q<best){best=q;bt=t/100}}
+  c.opt=bt;
+});
+var ci=0;
+function renderChips(){$("chips").innerHTML=CLASSES.map(function(c,i){return '<button class="chip" type="button" data-i="'+i+'" aria-pressed="'+(i===ci)+'">'+esc(c.name)+'</button>'}).join("")}
+function draw(){
+  var c=CLASSES[ci],t=+$("thr").value;
+  var W=560,H=260,L=30,B=36,bins=20,neg=[],pos=[],i;
+  for(i=0;i<bins;i++){neg[i]=0;pos[i]=0}
+  c.cases.forEach(function(k){var b=Math.min(bins-1,Math.floor(k.s*bins));(k.p?pos:neg)[b]++});
+  var mx=0;for(i=0;i<bins;i++)mx=Math.max(mx,neg[i]+pos[i]);
+  var bw=(W-L-8)/bins,ph=H-B-12,out='',font='font-family="Geist Mono, ui-monospace, monospace"';
+  for(i=0;i<bins;i++){
+    var x=L+i*bw,hn=neg[i]/mx*ph,hp=pos[i]/mx*ph;
+    out+='<rect x="'+(x+1)+'" y="'+(H-B-hn)+'" width="'+(bw-2)+'" height="'+hn+'" fill="#d4d4d4"/>';
+    out+='<rect x="'+(x+1)+'" y="'+(H-B-hn-hp)+'" width="'+(bw-2)+'" height="'+hp+'" fill="#e5484d"/>';
+  }
+  var span=W-L-8,tx=L+t*span,ox=L+c.opt*span;
+  out+='<rect x="'+tx+'" y="6" width="'+(W-8-tx)+'" height="'+(H-B-6)+'" fill="#171717" opacity=".04"/>';
+  out+='<line x1="'+ox+'" x2="'+ox+'" y1="6" y2="'+(H-B)+'" stroke="#067a6e" stroke-dasharray="4 3"/><text '+font+' x="'+ox+'" y="'+(H-B+28)+'" font-size="10" fill="#067a6e" text-anchor="middle">cheapest '+c.opt.toFixed(2)+'</text>';
+  out+='<line x1="'+tx+'" x2="'+tx+'" y1="6" y2="'+(H-B)+'" stroke="#171717" stroke-width="2"/>';
+  out+='<line x1="'+L+'" x2="'+(W-8)+'" y1="'+(H-B)+'" y2="'+(H-B)+'" stroke="#c9c9c9"/>';
+  [0,.25,.5,.75,1].forEach(function(v){out+='<text '+font+' x="'+(L+v*span)+'" y="'+(H-B+14)+'" font-size="10" fill="#6b6b6b" text-anchor="middle">'+v+'</text>'});
+  out+='<rect x="'+(W-170)+'" y="8" width="9" height="9" rx="2" fill="#e5484d"/><text '+font+' x="'+(W-156)+'" y="16" font-size="10" fill="#4d4d4d">true exception</text><rect x="'+(W-80)+'" y="8" width="9" height="9" rx="2" fill="#d4d4d4"/><text '+font+' x="'+(W-66)+'" y="16" font-size="10" fill="#4d4d4d">clean</text>';
+  $("plot").innerHTML=out;
+  $("thrV").textContent=t.toFixed(2);
+  var q=cost(c,t),opt=cost(c,c.opt),d=q.cost-opt.cost;
+  $("metrics").innerHTML=
+   '<div class="metric"><div class="label">Sent to review</div><div class="v">'+(q.tp+q.fp)+'<span class="hlp"> of 200</span></div></div>'+
+   '<div class="metric"><div class="label">Total cost</div><div class="v">$'+q.cost.toLocaleString()+'</div></div>'+
+   '<div class="metric"><div class="label">Needless reviews</div><div class="v">'+q.fp+'<span class="hlp"> × $'+c.fp+'</span></div></div>'+
+   '<div class="metric bad"><div class="label">Missed exceptions</div><div class="v">'+q.fn+'<span class="hlp"> × $'+c.fn+'</span></div></div>';
+  $("verdict").innerHTML='<b>'+esc(c.name)+'.</b> '+esc(c.note)+'<div class="hlp" style="margin-top:6px">'+(d<=0?'This is the cheapest setting.':'$'+d.toLocaleString()+' above the cheapest setting ('+c.opt.toFixed(2)+').')+' A global 0.80 would cost $'+cost(c,.8).cost.toLocaleString()+' here.</div>';
+}
+$("chips").addEventListener("click",function(e){var b=e.target.closest(".chip");if(b){ci=+b.dataset.i;$("thr").value=.5;renderChips();draw()}});
+$("thr").addEventListener("input",draw);
+$("best").addEventListener("click",function(){$("thr").value=CLASSES[ci].opt;draw()});
+renderChips();draw();
+
+/* sovereignty */
+var RENT=["Foundation models and LLMs","Specialised forecasting and anomaly models","Decision-model services","Document-intelligence services","Vector search and retrieval infrastructure"];
+var OWN=["Canonical data model: meters, accounts, contracts, tariffs, billing events","Case and exception taxonomy, with root causes","Business rules, tariff logic, regulatory controls","Calibration sets, labelled outcomes, evaluation data","Decision thresholds and approval policies","Audit trails, lineage, model-risk documentation","Human-in-the-loop roles and escalation paths"];
+$("rentList").innerHTML=RENT.map(function(x){return '<div class="item"><span class="hlp">&rarr;</span><span>'+esc(x)+'</span></div>'}).join("");
+$("ownList").innerHTML=OWN.map(function(x,i){return '<label class="item"><input type="checkbox" data-o="'+i+'"><span>'+esc(x)+'</span></label>'}).join("");
+function ownCount(){return document.querySelectorAll("#ownList input:checked").length}
+var vendor=null,VEND=["Switch LLM vendor","Upgrade the same model","Add a new decision-model service"];
+function swap(){
+  if(vendor===null)return;
+  var n=ownCount(),full=n===OWN.length;
+  var base=["Prompts, output formats and score scales will differ.","Thresholds shift between versions of even the same model, so recalibrate and run in shadow mode first.","Calibrated scores are not portable, so re-fit thresholds per task."][vendor];
+  $("swapOut").innerHTML='<b>'+(full?'Meaning survives.':n>=4?'Partly exposed.':'Meaning moves with the vendor.')+'</b> '+esc(base)+' '+(full?'Your gateway, taxonomy, rules and labelled outcomes define a “valid bill”, so only the engine changes.':'You own '+n+' of '+OWN.length+'. The rest is defined implicitly by whichever model sits behind the gateway.');
+}
+function updOwn(){var n=ownCount();$("ownScore").textContent=n+" of "+OWN.length+" owned";$("ownBar").style.width=(n/OWN.length*100)+"%";swap()}
+$("ownList").addEventListener("change",updOwn);
+$("swapRow").innerHTML=VEND.map(function(v,i){return '<button class="chip" type="button" data-v="'+i+'" aria-pressed="false">'+esc(v)+'</button>'}).join("");
+$("swapRow").addEventListener("click",function(e){var b=e.target.closest(".chip");if(!b)return;vendor=+b.dataset.v;Array.prototype.forEach.call($("swapRow").children,function(c,i){c.setAttribute("aria-pressed",String(i===vendor))});swap()});
+
+/* init */
+var h=parseInt((location.hash||"").slice(1),10);
+go(isNaN(h)?0:h);
+document.addEventListener("keydown",function(e){
+  if(e.target.matches("input,textarea,select")||e.altKey||e.ctrlKey||e.metaKey)return;
+  if(e.target.closest&&e.target.closest("#tabs"))return;
+  if(e.key==="ArrowRight")go(cur+1);
+  if(e.key==="ArrowLeft")go(cur-1);
+});
+})();
+</script>
+</body>
+</html>
